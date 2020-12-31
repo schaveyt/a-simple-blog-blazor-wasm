@@ -29,8 +29,7 @@ namespace ASimpleBlogStarter.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseInMemoryDatabase(databaseName: "Blog"));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -59,7 +58,6 @@ namespace ASimpleBlogStarter.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseWebAssemblyDebugging();
 
                 Database.InitialiseDatabase(app, env);
